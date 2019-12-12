@@ -1,3 +1,9 @@
+/** TestAbstractClass.h
+ * This file holds a test abstract class that can be used
+ * create a mock class.
+ * 
+ * @author Alec Matthews <alec\@hoodtech.com>
+ */
 
 #pragma once
 
