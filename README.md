@@ -12,10 +12,22 @@ In this case the memory has been cleared by the computer before the googlemock f
 exception gets thrown within the `TypedExpectation<F>* FindMatchingExpectationLocked(const ArgumentTuple& args)`
 function in `gmock-spec-builders.h`. A vector `get()` operation is triggering the exception. Since the exception is
 occurring within a C++ standard library class the bug has most likely been introduced within an update to the C++ build
-tools distributed by Microsoft. This memory access bug may show itself in other ways with C++ standard library code.
+tools distributed by Microsoft. This memory access bug may show itself in other ways with C++ standard library code. The
+build tools for C++11 and C++14 still seem to build googletest correctly; while the build tools for C++17 cause the
+exception.
 
 The GitHub [Issue #2628](https://github.com/google/googletest/issues/2628) has been created to notify the developers of
-googletest of the issue. A permanent solution will likely immerge in a patched version of Visual Studio in a few weeks.
-Googletest developers may also attempt to fix the issue. For now, my recommendation for solving this issue is to
-downgrade the C++ version to C++14. This should allow the use of most new language feature with the added benefit of
-stability.
+googletest of the issue. Googletest developers may also attempt to fix the issue. However, a permanent solution will
+likely immerge in a patched version of Visual Studio in a few weeks.
+
+The only indication of that a change was made to the standard library in this release of Visual Studio it a single
+bullet point in the [changelog](https://docs.microsoft.com/en-us/visualstudio/releases/2019/release-notes#cpp-164GA).
+The bullet point indicates that implementation of the C++17 standard is complete.
+
+```plaintext
+C++17: Implemented to_chars() general precision, completing P0067R5 Elementary String Conversions (charconv). This
+completes implementation of all library features in the C++17 Standard.
+```
+
+Obviously, a new bug has been introduced in the standard library.  For now, my recommendation for solving this issue is to downgrade the C++ version to C++14. This should allow the
+use of most new language feature with the added benefit of stability.

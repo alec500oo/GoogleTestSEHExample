@@ -1,9 +1,11 @@
 
 # Build output
 [Oo]ut
+[Bb]uild
 
 # Visual studio output
 .vs
+.vscode
 
 # CMake files
 CMakeLists.txt.user
